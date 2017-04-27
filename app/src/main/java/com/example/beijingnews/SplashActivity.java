@@ -1,5 +1,7 @@
 package com.example.beijingnews;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
@@ -10,7 +12,10 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class SplashActivity extends AppCompatActivity {
+import com.example.beijingnews.activity.MainActivity;
+import com.example.beijingnews.utils.CacheUtils;
+
+public class SplashActivity extends Activity {
     private RelativeLayout rl_splash_root;
 
     @Override
@@ -45,7 +50,15 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            Toast.makeText(SplashActivity.this,"动画播放完成",Toast.LENGTH_SHORT).show();
+            boolean isStartMain= CacheUtils.getBoolean(SplashActivity.this,GuideActivity.START_MAIN);
+            if(isStartMain){
+                Intent intent=new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent=new Intent(SplashActivity.this,GuideActivity.class);
+                startActivity(intent);
+            }
+            finish();
         }
 
         @Override
